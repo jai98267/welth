@@ -1,13 +1,29 @@
-import React from 'react'
-import { BarLoader } from 'react-spinners'
+import { getUserAccounts } from "@/actions/dashboard";
+import { defaultCategories } from "@/data/categories";
+import { AddTransactionForm } from "../_components/transaction-form";
+import { getTransaction } from "@/actions/transaction";
 
-const page = () => {
+export default async function AddTransactionPage({ searchParams }) {
+  const accounts = await getUserAccounts();
+  const editId = searchParams?.edit;
+
+  let initialData = null;
+  if (editId) {
+    const transaction = await getTransaction(editId);
+    initialData = transaction;
+  }
+
   return (
-    <div className='mt-40 text-3xl font-bold  flex justify-center gradient-title  '>
-      Coming Soon!!!!
-      
+    <div className="max-w-2xl mx-auto p-6 ">
+      <div className="flex justify-center md:justify-normal mb-8">
+        <h1 className="text-5xl gradient-title ">Add Transaction</h1>
+      </div>
+      <AddTransactionForm
+        accounts={accounts}
+        categories={defaultCategories}
+        editMode={!!editId}
+        initialData={initialData}
+      />
     </div>
-  )
+  );
 }
-
-export default page

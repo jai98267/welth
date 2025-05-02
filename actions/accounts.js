@@ -15,6 +15,7 @@ const serializeTransaction = (obj) => {
   return serialized;
 };
 
+
 export async function updateDefaultAccount(accountId) {
   try {
     const { userId } = await auth();
